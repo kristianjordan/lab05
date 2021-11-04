@@ -9,128 +9,114 @@ using namespace std;
 
 
 
-// real addition testing
+// addition testing
 
 
-// (7 - 5) + 3
+// testing case for (7 - 5) + 3
 TEST(AddTest, AddSubCombinedTest) {
-        Base *operand1 = new Op(7);
-        Base *operand2 = new Op(5);
-        Base *operand3 = new Op(3);
-        Base *subtraction = new Sub(operand1, operand2);
-        Base *addition = new Add(subtraction, operand3);
+	// creating op objects for each operand and assigning to pointer
+        Base *operand1 = new Op(7); 
+        Base *operand2 = new Op(5); 
+        Base *operand3 = new Op(3); 
 
-        EXPECT_DOUBLE_EQ(addition->evaluate(), 5.0);
-        EXPECT_TRUE(addition->stringify() == "((7.000000 - 5.000000) + 3.000000)");
+        Base *subtraction = new Sub(operand1, operand2); // create subtraction pointer to point to Sub object containing 
+							 // result of subtraction operation
+							 
+        Base *addition = new Add(subtraction, operand3); // create addition pointer to point to Add object containing 
+							 // result of addition operation
+
+        EXPECT_DOUBLE_EQ(addition->evaluate(), 5.0); // expect final result of addition to equal 5
+        EXPECT_TRUE(addition->stringify() == "((7.000000 - 5.000000) + 3.000000)"); // testing to see if stringify function return is equal to string of
+										    // equation 
+	
+	// deallocations
+	delete operand1;
+	delete operand2;
+	delete operand3;
+	delete subtraction;
+	delete addition;
 
 }
 
 
+// testing case for positive sum
 TEST(AddTest, AddTestPositiveNumber) {
+	// create op object for operands and assign to pointer
 	Op *operand1 = new Op(2);
 	Op *operand2 = new Op(9);
+
+	// creates addition object and passes operands
+	// assign it to addition pointer
         Add *addition = new Add(operand1, operand2);
 	
-        EXPECT_DOUBLE_EQ(addition->evaluate(), 11.0);
-	EXPECT_TRUE(addition->stringify() == "(2.000000 + 9.000000)");
+        EXPECT_DOUBLE_EQ(addition->evaluate(), 11.0); // expect sum to equal 11
+	EXPECT_TRUE(addition->stringify() == "(2.000000 + 9.000000)"); // expect strinfigy function return to equal string of equation
+
+	// deallocations
+	delete operand1;
+	delete operand2;
+	delete addition;
 }
 
+// testing case for sum = 0
 TEST(AddTest, AddTestZero) {
+	// create op object for operands and assign to pointer
         Op *operand1 = new Op(5);
         Op *operand2 = new Op(-5);
+	
+	// creates addition object and passes operands
+        // assign it to addition pointer
         Add *addition = new Add(operand1, operand2);
 
-        EXPECT_DOUBLE_EQ(addition->evaluate(), 0.0);
-        EXPECT_TRUE(addition->stringify() == "(5.000000 + -5.000000)");
+        EXPECT_DOUBLE_EQ(addition->evaluate(), 0.0); // expect sum = 0
+        EXPECT_TRUE(addition->stringify() == "(5.000000 + -5.000000)"); // expect strinfigy function return to equal string of equation
+
+	 // deallocations
+        delete operand1;
+        delete operand2;
+        delete addition;
+
 }
 
+// testing case for sum = negative number
 TEST(AddTest, AddTestNegativeNumber) {
+	// create op object for operands and assign to pointer
         Op *operand1 = new Op(-95);
         Op *operand2 = new Op(-5);
+
+	// creates addition object and passes operands
+        // assign it to addition pointer
         Add *addition = new Add(operand1, operand2);
 
-        EXPECT_DOUBLE_EQ(addition->evaluate(), -100.0);
-        EXPECT_TRUE(addition->stringify() == "(-95.000000 + -5.000000)");
+        EXPECT_DOUBLE_EQ(addition->evaluate(), -100.0); // expect sum = -100
+        EXPECT_TRUE(addition->stringify() == "(-95.000000 + -5.000000)"); // expect strinfigy function return to equal string of equation
+
+	 // deallocations
+        delete operand1;
+        delete operand2;
+        delete addition;
+
 }
 
+
+// testing case for sum = fraction
 TEST(AddTest, AddTestFraction) {
+	// create op object for operands and assign to pointer
         Op *operand1 = new Op(0.50);
         Op *operand2 = new Op(0.25);
+	
+	// creates addition object and passes operands
+        // assign it to addition pointer
         Add *addition = new Add(operand1, operand2);
 
-        EXPECT_DOUBLE_EQ(addition->evaluate(), 0.75);
-        EXPECT_TRUE(addition->stringify() == "(0.500000 + 0.250000)");
+        EXPECT_DOUBLE_EQ(addition->evaluate(), 0.75); // expect sum = 0.75
+        EXPECT_TRUE(addition->stringify() == "(0.500000 + 0.250000)"); // expect strinfigy function return to equal string of equation
+
+	// deallocations
+	delete operand1;
+	delete operand2;
+	delete addition;
 }
 
-
-// mock testing and definition
-/*
-class WholeAddMock: public Base {
-    public:
-        WholeAddMock() { }
-
-        virtual double evaluate() { return 75.0; }
-        virtual string stringify() { return "75.0"; }
-};
-
-class FractionAddMock: public Base {
-    public:
-        FractionAddMock() { }
-
-        virtual double evaluate() { return 0.357; }
-        virtual string stringify() { return "0.357"; }
-};
-
-class ZeroAddMock: public Base {
-    public:
-        ZeroAddMock() { }
-
-        virtual double evaluate() { return 0.0; }
-        virtual string stringify() { return "0.0"; }
-};
-
-
-class NegativeAddMock: public Base {
-    public:
-        NegativeAddMock() { }
-
-        virtual double evaluate() { return -89.0; }
-        virtual string stringify() { return "-89.0"; }
-};
-
-class RemainderAddMock: public Base {
-    public:
-        RemainderAddMock() { }
-
-        virtual double evaluate() { return 9.75; }
-        virtual string stringify() { return "9.75"; }
-};
-
-TEST(AddTest, WholeAddMockTest) {
-    WholeAddMock* test = new WholeAddMock();
-    EXPECT_DOUBLE_EQ(test->evaluate(), 75.0);
-}
-
-TEST(AddTest, FractionAddMockTest) {
-    FractionAddMock* test = new FractionAddMock();
-    EXPECT_DOUBLE_EQ(test->evaluate(), 0.357);
-}
-
-TEST(AddTest, ZeroAddMockTest) {
-    ZeroAddMock* test = new ZeroAddMock();
-    EXPECT_DOUBLE_EQ(test->evaluate(), 0.0);
-}
-
-TEST(AddTest, NegativeAddMockTest) {
-    NegativeAddMock* test = new NegativeAddMock();
-    EXPECT_DOUBLE_EQ(test->evaluate(), -89.0);
-}
-
-TEST(AddTest, RemainderAddMockTest) {
-    RemainderAddMock* test = new RemainderAddMock();
-    EXPECT_DOUBLE_EQ(test->evaluate(), 9.75);
-}
-
-*/
 #endif //__ADD_TEST_HPP__
 
