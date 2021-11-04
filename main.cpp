@@ -1,5 +1,8 @@
 #include <iostream>
-
+#include "add.hpp"
+#include "sub.hpp"
+#include "op.hpp"
+#include "mult.hpp"
 #include "base.hpp"
 
 int main() {
@@ -15,5 +18,16 @@ int main() {
     Base* minus = new Sub(add, two);
 
     std::cout << minus->stringify() << " = " << minus->evaluate() << std::endl;
+	
+    
+    // deallocations
+    delete three;
+    delete seven;
+    delete four;
+    delete two;
+    delete mult;
+    delete add;
+    delete minus;
+   
     return 0;
 }

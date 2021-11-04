@@ -8,130 +8,105 @@
 using namespace std;
 
 
-// real subtraction testing
+// subtraction testing
 
-// 10 - (5+5)
+// test case for 10 - (5+5)
 TEST(SubTest, SubAddCombinedTest) {
+	// creating op objets for operands and assigning to pointer
         Base *operand1 = new Op(5);
         Base *operand2 = new Op(5);
 	Base *operand3 = new Op(10);
+
+	// creating Add and Sub objects to pass operands and assign them to pointers
 	Base *addition = new Add(operand1, operand2);
         Base *subtraction = new Sub(operand3, addition);
+	
+        EXPECT_DOUBLE_EQ(subtraction->evaluate(), 0.0); // expect difference = 0
+        EXPECT_TRUE(subtraction->stringify() == "(10.000000 - (5.000000 + 5.000000))"); // expect stringify function return to = string of equation
 
-        EXPECT_DOUBLE_EQ(subtraction->evaluate(), 0.0);
-        EXPECT_TRUE(subtraction->stringify() == "(10.000000 - (5.000000 + 5.000000))");
-
+	// deallocations
+	delete operand1;
+	delete operand2;
+	delete operand3;
+	delete addition;
+	delete subtraction;
 }
 
 
-
+// test case for positive difference
 TEST(SubTest, SubTestPositiveNumber) {
+	// create op objects for operands and assign them to pointer
         Op *operand1 = new Op(700);
         Op *operand2 = new Op(400);
+
+	// create Sub object to pass operands and assign to pointer
         Sub *subtraction = new Sub(operand1, operand2);
 
-        EXPECT_DOUBLE_EQ(subtraction->evaluate(), 300.0);
-        EXPECT_TRUE(subtraction->stringify() == "(700.000000 - 400.000000)");
+        EXPECT_DOUBLE_EQ(subtraction->evaluate(), 300.0); // expect difference = 300
+        EXPECT_TRUE(subtraction->stringify() == "(700.000000 - 400.000000)"); // expect stringify function return to = string of equation
+	
+	// deallocations
+	delete operand1;
+	delete operand2;
+	delete subtraction;
 }
 
+
+// test case for difference = 0
 TEST(SubTest, SubTestZero) {
+	// create op objects for operands and assign them to pointer
         Op *operand1 = new Op(5);
         Op *operand2 = new Op(5);
+	
+	// create Sub object to pass operands and assign to pointer
         Sub *subtraction = new Sub(operand1, operand2);
 
-        EXPECT_DOUBLE_EQ(subtraction->evaluate(), 0.0);
-        EXPECT_TRUE(subtraction->stringify() == "(5.000000 - 5.000000)");
+        EXPECT_DOUBLE_EQ(subtraction->evaluate(), 0.0); // expect difference = 0
+        EXPECT_TRUE(subtraction->stringify() == "(5.000000 - 5.000000)"); // expect stringify function return to = string of equation
+
+	// deallocations
+	delete operand1;
+	delete operand2;
+	delete subtraction;
 }
 
+
+// test case for difference = negative
 TEST(SubTest, SubTestNegativeNumber) {
+	// create op objects for operands and assign them to pointer
         Op *operand1 = new Op(5);
         Op *operand2 = new Op(10);
+	
+	// create Sub object to pass operands and assign to pointer		
         Sub *subtraction = new Sub(operand1, operand2);
 
-        EXPECT_DOUBLE_EQ(subtraction->evaluate(), -5.0);
-        EXPECT_TRUE(subtraction->stringify() == "(5.000000 - 10.000000)");
+        EXPECT_DOUBLE_EQ(subtraction->evaluate(), -5.0); // expect difference = -5
+        EXPECT_TRUE(subtraction->stringify() == "(5.000000 - 10.000000)"); // expect stringify function return to = string of equation
+
+	// deallocations
+	delete operand1;
+	delete operand2;
+	delete subtraction;
 }
 
+
+// test case for difference = fraction
 TEST(SubTest, SubTestFraction) {
+	// create op objects for operands and assign them to pointer
         Op *operand1 = new Op(0.70);
         Op *operand2 = new Op(0.25);
+	
+	// create Sub object to pass operands and assign to pointer
         Sub *subtraction = new Sub(operand1, operand2);
 
-        EXPECT_DOUBLE_EQ(subtraction->evaluate(), 0.45);
-        EXPECT_TRUE(subtraction->stringify() == "(0.700000 - 0.250000)");
+        EXPECT_DOUBLE_EQ(subtraction->evaluate(), 0.45); // expect difference = 0.45
+        EXPECT_TRUE(subtraction->stringify() == "(0.700000 - 0.250000)"); // expect stringify function return to = string of equation
+
+	// deallocations
+	delete operand1;
+	delete operand2;
+	delete subtraction;
 }
-
-
-
-/*
-class WholeSubMock: public Base {
-    public:
-        WholeSubMock() { }
-
-        virtual double evaluate() { return 17.0; }
-        virtual string stringify() { return "17.0"; }
-};
-
-class FractionSubMock: public Base {
-    public:
-        FractionSubMock() { }
-
-        virtual double evaluate() { return 0.95; }
-        virtual string stringify() { return "0.95"; }
-};
-
-class ZeroSubMock: public Base {
-    public:
-        ZeroSubMock() { }
-
-        virtual double evaluate() { return 0.0; }
-        virtual string stringify() { return "0.0"; }
-};
-
-
-class NegativeSubMock: public Base {
-    public:
-        NegativeSubMock() { }
-
-        virtual double evaluate() { return -154.0; }
-        virtual string stringify() { return "-154.0"; }
-};
-
-class RemainderSubMock: public Base {
-    public:
-        RemainderSubMock() { }
-
-        virtual double evaluate() { return 19.45; }
-        virtual string stringify() { return "19.45"; }
-};
-
-
-
-TEST(SubTest, WholeSubMockTest) {
-    WholeSubMock* test = new WholeSubMock();
-    EXPECT_DOUBLE_EQ(test->evaluate(), 17.0);
-}
-
-TEST(SubTest, FractionAddMockTest) {
-    FractionSubMock* test = new FractionSubMock();
-    EXPECT_DOUBLE_EQ(test->evaluate(), 0.95);
-}
-
-TEST(SubTest, ZeroAddMockTest) {
-    ZeroSubMock* test = new ZeroSubMock();
-    EXPECT_DOUBLE_EQ(test->evaluate(), 0.0);
-}
-
-TEST(SubTest, NegativeAddMockTest) {
-    NegativeSubMock* test = new NegativeSubMock();
-    EXPECT_DOUBLE_EQ(test->evaluate(), -154.0);
-}
-
-TEST(SubTest, RemainderSubMockTest) {
-    RemainderSubMock* test = new RemainderSubMock();
-    EXPECT_DOUBLE_EQ(test->evaluate(), 19.45);
-}
-*/
 
 #endif //__SUB_TEST_HPP__
 
