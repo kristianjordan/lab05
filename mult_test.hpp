@@ -1,53 +1,50 @@
-#ifndef __OP_TEST_HPP__
-#define __OP_TEST_HPP__
+#ifndef __MULT_TEST_HPP__
+#define __MULT_TEST_HPP__
 
 #include "gtest/gtest.h"
 #include <string>
-#include "op.hpp"
+#include "mult.hpp"
 using namespace std;
 
-class SevenOpMock: public Base {
+class SevenMultMock: public Base {
     public:
-        SevenOpMock() { }
+        SevenMultMock() { }
 
         virtual double evaluate() { return 7.5; }
         virtual string stringify() { return "7.5"; }
 };
 
-class ZeroOpMock: public Base {
+class ZeroMultMock: public Base {
     public:
-        ZeroOpMock() { }
+        ZeroMultMock() { }
 
         virtual double evaluate() { return 0.0; }
         virtual string stringify() { return "0.0"; }
 };
 
-class NegativeOpMock: public Base {
+class NegativeMultMock: public Base {
     public:
-        NegativeOpMock() { }
+        NegativeMultMock() { }
 
         virtual double evaluate() { return -3.0; }
         virtual string stringify() { return "-3.0"; }
 };
 
 
-TEST(OpTest, OpEvaluateNonZero) {
-    Op* test = new Op(8.0);
-    EXPECT_DOUBLE_EQ(test->evaluate(), 8.0);
-}
-
-TEST(OpTest, SevenOpMockTest) {
-    SevenOpMock* test = new SevenOpMock();
+TEST(MultTest, SevenMultMockTest) {
+    SevenMultMock* test = new SevenMultMock();
     EXPECT_DOUBLE_EQ(test->evaluate(), 7.5);
 }
 
-TEST(OpTest, ZeroMockTest) {
-    ZeroOpMock* test = new ZeroOpMock();
+TEST(MultTest, ZeroMultMockTest) {
+    ZeroMultMock* test = new ZeroMultMock();
     EXPECT_DOUBLE_EQ(test->evaluate(), 0.0);
 }
 
-TEST(OpTest, NegativeOpMockTest) {
-    NegativeOpMock* test = new NegativeOpMock();
+TEST(MultTest, NegativeMultMockTest) {
+    NegativeMultMock* test = new NegativeMultMock();
     EXPECT_DOUBLE_EQ(test->evaluate(), -3.0);
 }
+
 #endif //__OP_TEST_HPP__
+
