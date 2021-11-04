@@ -4,61 +4,60 @@
 #include "gtest/gtest.h"
 #include <string>
 #include "div.hpp"
+#include "mult.hpp"
 using namespace std;
 
-class WholeDivMock: public Base {
-    public:
-        WholeDivMock() { }
 
-        virtual double evaluate() { return 35.0; }
-        virtual string stringify() { return "35.0"; }
-};
+// (5 / 5) * 50
+TEST(DivTest, DivMultCombinedTest) {
+        Base *operand1 = new Op(5);
+        Base *operand2 = new Op(5);
+        Base *operand3 = new Op(50);
+        Base *division = new Div(operand1, operand2);
+        Base *multiplication = new Mult(division, operand3);
 
-class FractionDivMock: public Base {
-    public:
-        FractionDivMock() { }
+        EXPECT_DOUBLE_EQ(multiplication->evaluate(), 50.0);
+        EXPECT_TRUE(multiplication->stringify() == "((5.000000 / 5.000000) * 50.000000)");
 
-        virtual double evaluate() { return 0.75; }
-        virtual string stringify() { return "0.75"; }
-};
-
-class ZeroDivMock: public Base {
-    public:
-        ZeroDivMock() { }
-
-        virtual double evaluate() { return 0.0; }
-        virtual string stringify() { return "0.0"; }
-};
-
-
-class NegativeDivMock: public Base {
-    public:
-        NegativeDivMock() { }
-
-        virtual double evaluate() { return -3.0; }
-        virtual string stringify() { return "-3.0"; }
-};
-
-
-TEST(DivTest, WholeDivMockTest) {
-    WholeDivMock* test = new WholeDivMock();
-    EXPECT_DOUBLE_EQ(test->evaluate(), 35.0);
 }
 
-TEST(DivTest, FractionDivMockTest) {
-    FractionDivMock* test = new FractionDivMock();
-    EXPECT_DOUBLE_EQ(test->evaluate(), 0.75);
+
+TEST(DivTest, DivTestPositiveNumber) {
+        Op *operand1 = new Op(25);
+        Op *operand2 = new Op(25);
+        Div *division = new Div(operand1, operand2);
+
+        EXPECT_DOUBLE_EQ(division->evaluate(), 1.0);
+        EXPECT_TRUE(division->stringify() == "(25.000000 / 25.000000)");
 }
 
-TEST(DivTest, ZeroDivMockTest) {
-    ZeroDivMock* test = new ZeroDivMock();
-    EXPECT_DOUBLE_EQ(test->evaluate(), 0.0);
+TEST(DivTest, DovTestZero) {
+        Op *operand1 = new Op(0);
+        Op *operand2 = new Op(90);
+        Div *division = new Div(operand1, operand2);
+
+        EXPECT_DOUBLE_EQ(division->evaluate(), 0.0);
+        EXPECT_TRUE(division->stringify() == "(0.000000 / 90.000000)");
 }
 
-TEST(DivTest, NeegativeDivMockTest) {
-    NegativeDivMock* test = new NegativeDivMock();
-    EXPECT_DOUBLE_EQ(test->evaluate(), -3.0);
+TEST(DivTest, DivNegativeNumber) {
+        Op *operand1 = new Op(-25);
+        Op *operand2 = new Op(5);
+        Div *division = new Div(operand1, operand2);
+
+        EXPECT_DOUBLE_EQ(division->evaluate(), -5.0);
+        EXPECT_TRUE(division->stringify() == "(-25.000000 / 5.000000)");
 }
+
+TEST(DivTest, DivisionTestFraction) {
+        Op *operand1 = new Op(3.0);
+        Op *operand2 = new Op(4.0);
+        Div *division = new Div(operand1, operand2);
+
+        EXPECT_DOUBLE_EQ(division->evaluate(), 0.75);
+        EXPECT_TRUE(division->stringify() == "(3.000000 / 4.000000)");
+}
+
 
 #endif //__OP_TEST_HPP__
 
