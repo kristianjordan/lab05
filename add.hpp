@@ -7,7 +7,7 @@ using namespace std;
 
 class Add : public Composite {
     public:
-        Add(Op *op1, Op *op2) : Composite(op1, op2) {}
+        Add(Base *op1, Base *op2) : Composite(op1, op2) {}
         virtual double evaluate() {return (operand1->evaluate() + operand2->evaluate()); }
         virtual string stringify() { return( "(" + operand1->stringify() + " + " + operand2->stringify() + ")" ); }
 };

@@ -3,12 +3,29 @@
 
 #include "gtest/gtest.h"
 #include <string>
+#include "sub.hpp"
 #include "add.hpp"
 using namespace std;
 
 
 
 // real addition testing
+
+
+// (7 - 5) + 3
+TEST(AddTest, AddSubCombinedTest) {
+        Base *operand1 = new Op(7);
+        Base *operand2 = new Op(5);
+        Base *operand3 = new Op(3);
+        Base *subtraction = new Sub(operand1, operand2);
+        Base *addition = new Add(subtraction, operand3);
+
+        EXPECT_DOUBLE_EQ(addition->evaluate(), 5.0);
+        EXPECT_TRUE(addition->stringify() == "((7.000000 - 5.000000) + 3.000000)");
+
+}
+
+
 TEST(AddTest, AddTestPositiveNumber) {
 	Op *operand1 = new Op(2);
 	Op *operand2 = new Op(9);

@@ -1,11 +1,69 @@
-#ifndef __ADD_TEST_HPP__
-#define __ADD_TEST_HPP__
+#ifndef __SUB_TEST_HPP__
+#define __SUB_TEST_HPP__
 
 #include "gtest/gtest.h"
 #include <string>
 #include "sub.hpp"
+#include "add.hpp"
 using namespace std;
 
+
+// real subtraction testing
+
+// 10 - (5+5)
+TEST(SubTest, SubAddCombinedTest) {
+        Base *operand1 = new Op(5);
+        Base *operand2 = new Op(5);
+	Base *operand3 = new Op(10);
+	Base *addition = new Add(operand1, operand2);
+        Base *subtraction = new Sub(operand3, addition);
+
+        EXPECT_DOUBLE_EQ(subtraction->evaluate(), 0.0);
+        EXPECT_TRUE(subtraction->stringify() == "(10.000000 - (5.000000 + 5.000000))");
+
+}
+
+
+
+TEST(SubTest, SubTestPositiveNumber) {
+        Op *operand1 = new Op(700);
+        Op *operand2 = new Op(400);
+        Sub *subtraction = new Sub(operand1, operand2);
+
+        EXPECT_DOUBLE_EQ(subtraction->evaluate(), 300.0);
+        EXPECT_TRUE(subtraction->stringify() == "(700.000000 - 400.000000)");
+}
+
+TEST(SubTest, SubTestZero) {
+        Op *operand1 = new Op(5);
+        Op *operand2 = new Op(5);
+        Sub *subtraction = new Sub(operand1, operand2);
+
+        EXPECT_DOUBLE_EQ(subtraction->evaluate(), 0.0);
+        EXPECT_TRUE(subtraction->stringify() == "(5.000000 - 5.000000)");
+}
+
+TEST(SubTest, SubTestNegativeNumber) {
+        Op *operand1 = new Op(5);
+        Op *operand2 = new Op(10);
+        Sub *subtraction = new Sub(operand1, operand2);
+
+        EXPECT_DOUBLE_EQ(subtraction->evaluate(), -5.0);
+        EXPECT_TRUE(subtraction->stringify() == "(5.000000 - 10.000000)");
+}
+
+TEST(SubTest, SubTestFraction) {
+        Op *operand1 = new Op(0.70);
+        Op *operand2 = new Op(0.25);
+        Sub *subtraction = new Sub(operand1, operand2);
+
+        EXPECT_DOUBLE_EQ(subtraction->evaluate(), 0.45);
+        EXPECT_TRUE(subtraction->stringify() == "(0.700000 - 0.250000)");
+}
+
+
+
+/*
 class WholeSubMock: public Base {
     public:
         WholeSubMock() { }
@@ -73,7 +131,7 @@ TEST(SubTest, RemainderSubMockTest) {
     RemainderSubMock* test = new RemainderSubMock();
     EXPECT_DOUBLE_EQ(test->evaluate(), 19.45);
 }
-
+*/
 
 #endif //__SUB_TEST_HPP__
 
