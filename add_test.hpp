@@ -6,6 +6,48 @@
 #include "add.hpp"
 using namespace std;
 
+
+
+// real addition testing
+TEST(AddTest, AddTestPositiveNumber) {
+	Op *operand1 = new Op(2);
+	Op *operand2 = new Op(9);
+        Add *addition = new Add(operand1, operand2);
+	
+        EXPECT_DOUBLE_EQ(addition->evaluate(), 11.0);
+	EXPECT_TRUE(addition->stringify() == "(2.000000 + 9.000000)");
+}
+
+TEST(AddTest, AddTestZero) {
+        Op *operand1 = new Op(5);
+        Op *operand2 = new Op(-5);
+        Add *addition = new Add(operand1, operand2);
+
+        EXPECT_DOUBLE_EQ(addition->evaluate(), 0.0);
+        EXPECT_TRUE(addition->stringify() == "(5.000000 + -5.000000)");
+}
+
+TEST(AddTest, AddTestNegativeNumber) {
+        Op *operand1 = new Op(-95);
+        Op *operand2 = new Op(-5);
+        Add *addition = new Add(operand1, operand2);
+
+        EXPECT_DOUBLE_EQ(addition->evaluate(), -100.0);
+        EXPECT_TRUE(addition->stringify() == "(-95.000000 + -5.000000)");
+}
+
+TEST(AddTest, AddTestFraction) {
+        Op *operand1 = new Op(0.50);
+        Op *operand2 = new Op(0.25);
+        Add *addition = new Add(operand1, operand2);
+
+        EXPECT_DOUBLE_EQ(addition->evaluate(), 0.75);
+        EXPECT_TRUE(addition->stringify() == "(0.500000 + 0.250000)");
+}
+
+
+// mock testing and definition
+/*
 class WholeAddMock: public Base {
     public:
         WholeAddMock() { }
@@ -47,15 +89,6 @@ class RemainderAddMock: public Base {
         virtual string stringify() { return "9.75"; }
 };
 
-// real addition testing
-TEST(AddTest, AddTest) {
-    Op *operand1 = new Op(2);
-    Op *operand2 = new Op(9);
-    Add *addition = new Add(operand1, operand2);
-    
-    EXPECT_DOUBLE_EQ(addition->evaluate(), 11.0);
-}
-
 TEST(AddTest, WholeAddMockTest) {
     WholeAddMock* test = new WholeAddMock();
     EXPECT_DOUBLE_EQ(test->evaluate(), 75.0);
@@ -81,6 +114,6 @@ TEST(AddTest, RemainderAddMockTest) {
     EXPECT_DOUBLE_EQ(test->evaluate(), 9.75);
 }
 
-
+*/
 #endif //__ADD_TEST_HPP__
 
