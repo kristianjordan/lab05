@@ -4,47 +4,60 @@
 #include "gtest/gtest.h"
 #include <string>
 #include "mult.hpp"
+#include "div.hpp"
 using namespace std;
 
-class SevenMultMock: public Base {
-    public:
-        SevenMultMock() { }
 
-        virtual double evaluate() { return 7.5; }
-        virtual string stringify() { return "7.5"; }
-};
+// (5 * 5) / 5
+TEST(MultTest, MultDivCombinedTest) {
+        Base *operand1 = new Op(5);
+        Base *operand2 = new Op(5);
+        Base *operand3 = new Op(5);
+        Base *multiplication = new Mult(operand1, operand2);
+        Base *division = new Div(multiplication, operand3);
 
-class ZeroMultMock: public Base {
-    public:
-        ZeroMultMock() { }
+        EXPECT_DOUBLE_EQ(division->evaluate(), 5.0);
+        EXPECT_TRUE(division->stringify() == "((5.000000 * 5.000000) / 5.000000)");
 
-        virtual double evaluate() { return 0.0; }
-        virtual string stringify() { return "0.0"; }
-};
-
-class NegativeMultMock: public Base {
-    public:
-        NegativeMultMock() { }
-
-        virtual double evaluate() { return -3.0; }
-        virtual string stringify() { return "-3.0"; }
-};
-
-
-TEST(MultTest, SevenMultMockTest) {
-    SevenMultMock* test = new SevenMultMock();
-    EXPECT_DOUBLE_EQ(test->evaluate(), 7.5);
 }
 
-TEST(MultTest, ZeroMultMockTest) {
-    ZeroMultMock* test = new ZeroMultMock();
-    EXPECT_DOUBLE_EQ(test->evaluate(), 0.0);
+
+TEST(MultTest, MultTestPositiveNumber) {
+        Op *operand1 = new Op(4);
+        Op *operand2 = new Op(5);
+        Mult *multiplication = new Mult(operand1, operand2);
+
+        EXPECT_DOUBLE_EQ(multiplication->evaluate(), 20.0);
+        EXPECT_TRUE(multiplication->stringify() == "(4.000000 * 5.000000)");
 }
 
-TEST(MultTest, NegativeMultMockTest) {
-    NegativeMultMock* test = new NegativeMultMock();
-    EXPECT_DOUBLE_EQ(test->evaluate(), -3.0);
+TEST(MultTest, MultTestZero) {
+        Op *operand1 = new Op(17);
+        Op *operand2 = new Op(0);
+        Mult *multiplication = new Mult(operand1, operand2);
+
+        EXPECT_DOUBLE_EQ(multiplication->evaluate(), 0.0);
+        EXPECT_TRUE(multiplication->stringify() == "(17.000000 * 0.000000)");
 }
 
-#endif //__OP_TEST_HPP__
+TEST(MultTest, MultNegativeNumber) {
+        Op *operand1 = new Op(-8);
+        Op *operand2 = new Op(6);
+        Mult *multiplication = new Mult(operand1, operand2);
+
+        EXPECT_DOUBLE_EQ(multiplication->evaluate(), -48.0);
+        EXPECT_TRUE(multiplication->stringify() == "(-8.000000 * 6.000000)");
+}
+
+TEST(MultTest, MultTestFraction) {
+        Op *operand1 = new Op(1.0);
+        Op *operand2 = new Op(1.5);
+        Mult *multiplication = new Mult(operand1, operand2);
+
+        EXPECT_DOUBLE_EQ(multiplication->evaluate(), 1.50);
+        EXPECT_TRUE(multiplication->stringify() == "(1.000000 * 1.500000)");
+}
+
+
+#endif //__MULT_TEST_HPP__
 
