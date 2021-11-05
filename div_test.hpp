@@ -91,7 +91,7 @@ TEST(DivTest, DivNegativeNumber) {
 
 
 // testing case for quotient = fraction
-TEST(DivTest, DivisionTestFraction) {
+TEST(DivTest, DivTestFraction) {
 	// creating op objects for operands and assigning it to pointer
         Op *operand1 = new Op(3.0);
         Op *operand2 = new Op(4.0);
@@ -109,6 +109,24 @@ TEST(DivTest, DivisionTestFraction) {
 
 }
 
+// test case for when a number is divided by 0
+TEST(DivTest, DivDivideZeroTest) {
+	// create op objects for operands and assign to pointer
+	Op * operand1 = new Op(7.0);
+	Op * operand2 = new Op(0.0);
+	
+	// create double infinity to use when testing the 
+	// evaluate function	
+	double infinity = (1.0/0.0);
 
+	// create Div object to pass parameters and assign to pointer
+	Div *division = new Div(operand1, operand2);
+
+	// compare quotient of 7/0 with inifity. should be equal because
+	// a number > 0 divided by zero outputs infinity
+	EXPECT_EQ(division->evaluate(), infinity);	
+
+	EXPECT_TRUE(division->stringify() == "(7.000000 / 0.000000)"); // expect strinfigy function return to equal string of equation
+}
 #endif //__OP_TEST_HPP__
 
