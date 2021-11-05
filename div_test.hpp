@@ -127,6 +127,11 @@ TEST(DivTest, DivDivideZeroTest) {
 	EXPECT_EQ(division->evaluate(), infinity);	
 
 	EXPECT_TRUE(division->stringify() == "(7.000000 / 0.000000)"); // expect strinfigy function return to equal string of equation
+
+	// deallocations
+	delete operand1;
+	delete operand2;
+	delete division;
 }
 #endif //__OP_TEST_HPP__
 
